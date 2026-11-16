@@ -3,6 +3,7 @@ Label: CatVPN Nord
 Suite: stable
 Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64 iphoneos-arm64e
+Components: main
 Description: CatVPN Nord jailbreak packages
 MD5Sum:
  aa2f03b58a1ee4f15bb60c80d46138e1 1822 Packages
