@@ -1,48 +1,48 @@
 Package: com.catvpn.nord.rootful
 Name: CatVPN Nord (Rootful / Cydia)
-Version: 1.0.5+2
+Version: 1.0.6+3
 Architecture: iphoneos-arm
 Maintainer: CatVPN Nord
 Section: Networking
 Depends: firmware (>= 15.0), uikittools
 Conflicts: com.catvpn.nord, com.catvpn.nord.rootless, com.catvpn.nord.roothide
 Replaces: com.catvpn.nord
-Installed-Size: 16188
+Installed-Size: 16456
 Description: CatVPN Nord for rootful; iOS 15.0+; install only on matching jailbreak.
-Filename: debs/com.catvpn.nord.rootful_1.0.5+2_iphoneos-arm.deb
-Size: 7000254
-MD5sum: 8b9aaeb773550e0e24bfee1d4272cfdf
-SHA256: 14bcab778da6b429e37f66f155eb92a55359623d8859ea5f335c7c7316c6bcf5
+Filename: debs/com.catvpn.nord.rootful_1.0.6+3_iphoneos-arm.deb
+Size: 7076940
+MD5sum: d1140ebdf72553537fd9f652d8e869b4
+SHA256: 8861fea4a60b8ca5cff65d78c6cd77009077f126d6a3ba96c56f4f0d7344b5a9
 
 Package: com.catvpn.nord.rootless
 Name: CatVPN Nord (Rootless / Sileo)
-Version: 1.0.5+2
+Version: 1.0.6+3
 Architecture: iphoneos-arm64
 Maintainer: CatVPN Nord
 Section: Networking
 Depends: firmware (>= 15.0), uikittools
 Conflicts: com.catvpn.nord, com.catvpn.nord.rootful, com.catvpn.nord.roothide
 Replaces: com.catvpn.nord
-Installed-Size: 16188
+Installed-Size: 16456
 Description: CatVPN Nord for rootless; iOS 15.0+; install only on matching jailbreak.
-Filename: debs/com.catvpn.nord.rootless_1.0.5+2_iphoneos-arm64.deb
-Size: 7000474
-MD5sum: bbd958d7cd64395976064a74fe21bedb
-SHA256: 3f4da8bbd2c67ad1efd3462d203d661e8744afc40676ec7d038622838d240bc3
+Filename: debs/com.catvpn.nord.rootless_1.0.6+3_iphoneos-arm64.deb
+Size: 7077184
+MD5sum: a8c414c7dda55188210ca68583d39958
+SHA256: 15a8ec92e1945b0541da2cc89820462ee67d15e4c080bb6a37fc879b7d8f89be
 
 Package: com.catvpn.nord.roothide
 Name: CatVPN Nord (RootHide / Sileo)
-Version: 1.0.5+2
+Version: 1.0.6+3
 Architecture: iphoneos-arm64e
 Maintainer: CatVPN Nord
 Section: Networking
 Depends: firmware (>= 15.0), uikittools
 Conflicts: com.catvpn.nord, com.catvpn.nord.rootful, com.catvpn.nord.rootless
 Replaces: com.catvpn.nord
-Installed-Size: 16188
+Installed-Size: 16457
 Description: CatVPN Nord for roothide; iOS 15.0+; install only on matching jailbreak.
-Filename: debs/com.catvpn.nord.roothide_1.0.5+2_iphoneos-arm64e.deb
-Size: 7000418
-MD5sum: f806e3a8ac2a4e1f4ffb905fbf5f7e61
-SHA256: dcd1a2c53c91d02fa0a68fd8e7d3d192de7b02568d5f8aef56e4573d812e89d6
+Filename: debs/com.catvpn.nord.roothide_1.0.6+3_iphoneos-arm64e.deb
+Size: 7077112
+MD5sum: a561072b2db787925830320a3fd3c724
+SHA256: 47525f9f24a85ddf05482cb4b7e69c66624f462c41d6ee601f8417bfc970d587
 

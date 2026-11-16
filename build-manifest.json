@@ -1,13 +1,13 @@
 {
-  "sourceExecutableSHA256": "3af41e547420f2847f73c820b40c48575d0cbe389dc44e2f7153960c2a269e1c",
-  "sourceCommit": "3a23ddb396baf84db991f7434714f8e3d689f1d2",
-  "appVersion": "1.0.5",
-  "appBuild": "2",
+  "sourceExecutableSHA256": "eec11210680cdb572eb168edd2fccbfc9c393dc2b524b419fdd73ecd2e46105d",
+  "sourceCommit": "b1780d2b7e47bbb85e4fe054329fcf0f9e5295c5",
+  "appVersion": "1.0.6",
+  "appBuild": "3",
   "minimumOSVersion": "15.0",
-  "packageVersion": "1.0.5+2",
+  "packageVersion": "1.0.6+3",
   "packages": {
-    "com.catvpn.nord.rootful_1.0.5+2_iphoneos-arm.deb": "14bcab778da6b429e37f66f155eb92a55359623d8859ea5f335c7c7316c6bcf5",
-    "com.catvpn.nord.rootless_1.0.5+2_iphoneos-arm64.deb": "3f4da8bbd2c67ad1efd3462d203d661e8744afc40676ec7d038622838d240bc3",
-    "com.catvpn.nord.roothide_1.0.5+2_iphoneos-arm64e.deb": "dcd1a2c53c91d02fa0a68fd8e7d3d192de7b02568d5f8aef56e4573d812e89d6"
+    "com.catvpn.nord.rootful_1.0.6+3_iphoneos-arm.deb": "8861fea4a60b8ca5cff65d78c6cd77009077f126d6a3ba96c56f4f0d7344b5a9",
+    "com.catvpn.nord.rootless_1.0.6+3_iphoneos-arm64.deb": "15a8ec92e1945b0541da2cc89820462ee67d15e4c080bb6a37fc879b7d8f89be",
+    "com.catvpn.nord.roothide_1.0.6+3_iphoneos-arm64e.deb": "47525f9f24a85ddf05482cb4b7e69c66624f462c41d6ee601f8417bfc970d587"
   }
 }
