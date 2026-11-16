@@ -1,13 +1,17 @@
 import Flutter
-import NetworkExtension
-import Security
 import UIKit
 
 @main
 @objc class AppDelegate: FlutterAppDelegate, FlutterImplicitEngineDelegate {
   private let channelName = "com.catvpn.nord/vpn"
   private let prefsPrefix = "catvpn_pref_"
-  private let keychainService = "com.catvpn.nord.catvp.ikev2"
+  private let apiSession: URLSession = {
+    let config = URLSessionConfiguration.ephemeral
+    config.timeoutIntervalForRequest = 120
+    config.timeoutIntervalForResource = 125
+    config.requestCachePolicy = .reloadIgnoringLocalCacheData
+    return URLSession(configuration: config)
+  }()
 
   override func application(
     _ application: UIApplication,
@@ -31,38 +35,36 @@ import UIKit
       guard let self = self else { return }
       switch call.method {
       case "prepareVpn":
-        result(true)
+        self.apiRequest(path: "/health", method: "GET", body: nil) { value in
+          if let error = value as? FlutterError { result(error) } else { result(true) }
+        }
 
       case "connect":
         guard let args = call.arguments as? [String: Any] else {
           result(FlutterError(code: "INVALID_ARGS", message: "Missing arguments", details: nil))
           return
         }
-        let hostname = (args["hostname"] as? String) ?? ""
-        let username = (args["username"] as? String) ?? ""
-        let password = (args["password"] as? String) ?? ""
-        if hostname.isEmpty || username.isEmpty || password.isEmpty {
-          result("NEED_WG_EXPORT")
-          return
+        let hostname = args["hostname"] as? String ?? ""
+        let username = args["username"] as? String ?? ""
+        let password = args["password"] as? String ?? ""
+        guard !hostname.isEmpty && !username.isEmpty && !password.isEmpty else {
+          result("NEED_WG_EXPORT"); return
         }
-        self.connectIkev2(hostname: hostname, username: username, password: password, result: result)
+        var body: [String: Any] = ["hostname": hostname, "username": username, "password": password]
+        if let country = args["countryId"] as? Int, country > 0 { body["country_id"] = country }
+        self.apiRequest(path: "/connect", method: "POST", body: body) { value in
+          if let error = value as? FlutterError { result(error) }
+          else { result((value as? [String: Any])?["state"] ?? "DOWN") }
+        }
 
       case "disconnect":
-        let manager = NEVPNManager.shared()
-        manager.loadFromPreferences { _ in
-          manager.connection.stopVPNTunnel()
-          result("DOWN")
+        self.apiRequest(path: "/disconnect", method: "POST", body: [:]) { value in
+          if let error = value as? FlutterError { result(error) }
+          else { result((value as? [String: Any])?["state"] ?? "DOWN") }
         }
 
       case "getStatus":
-        let status = NEVPNManager.shared().connection.status
-        let isUp = (status == .connected)
-        result([
-          "state": isUp ? "UP" : "DOWN",
-          "rxBytes": 0,
-          "txBytes": 0,
-          "revoked": false
-        ])
+        self.apiRequest(path: "/status", method: "GET", body: nil, result: result)
 
       case "shareWireGuardFile":
         guard let args = call.arguments as? [String: Any],
@@ -99,106 +101,30 @@ import UIKit
     }
   }
 
-  private func connectIkev2(
-    hostname: String,
-    username: String,
-    password: String,
-    result: @escaping FlutterResult
-  ) {
-    guard let passwordRef = savePasswordToKeychain(account: username, password: password) else {
-      result("NEED_WG_EXPORT")
-      return
+  private func apiRequest(path: String, method: String, body: [String: Any]?, result: @escaping FlutterResult) {
+    var request = URLRequest(url: URL(string: "http://127.0.0.1:8787" + path)!)
+    request.httpMethod = method
+    request.setValue("application/json", forHTTPHeaderField: "Accept")
+    if let body = body {
+      request.setValue("application/json", forHTTPHeaderField: "Content-Type")
+      request.httpBody = try? JSONSerialization.data(withJSONObject: body)
     }
-
-    let manager = NEVPNManager.shared()
-    manager.loadFromPreferences { loadErr in
-      if loadErr != nil {
-        result("NEED_WG_EXPORT")
-        return
-      }
-
-      if manager.connection.status == .connected || manager.connection.status == .connecting {
-        manager.connection.stopVPNTunnel()
-      }
-
-      let ikev2 = NEVPNProtocolIKEv2()
-      ikev2.serverAddress = hostname
-      ikev2.remoteIdentifier = hostname
-      ikev2.localIdentifier = username
-      ikev2.authenticationMethod = .none
-      ikev2.useExtendedAuthentication = true
-      ikev2.username = username
-      ikev2.passwordReference = passwordRef
-      ikev2.disconnectOnSleep = false
-      ikev2.enablePFS = true
-
-      ikev2.ikeSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256GCM
-      ikev2.ikeSecurityAssociationParameters.integrityAlgorithm = .SHA384
-      ikev2.ikeSecurityAssociationParameters.diffieHellmanGroup = .group20
-
-      ikev2.childSecurityAssociationParameters.encryptionAlgorithm = .algorithmAES256GCM
-      ikev2.childSecurityAssociationParameters.integrityAlgorithm = .SHA384
-      ikev2.childSecurityAssociationParameters.diffieHellmanGroup = .group20
-
-      manager.protocolConfiguration = ikev2
-      manager.localizedDescription = "CatVPN Nord"
-      manager.isEnabled = true
-
-      manager.saveToPreferences { saveErr in
-        if saveErr != nil {
-          // Missing Personal VPN entitlement (e.g. Free Apple ID sideload) -> fallback to WireGuard .conf share
-          result("NEED_WG_EXPORT")
+    apiSession.dataTask(with: request) { data, response, error in
+      DispatchQueue.main.async {
+        guard error == nil, let data = data, let response = response as? HTTPURLResponse,
+              let json = (try? JSONSerialization.jsonObject(with: data)) as? [String: Any] else {
+          result(FlutterError(code: "VPN_API_UNAVAILABLE",
+            message: "Dịch vụ CatVPN API chưa chạy. Kiểm tra jailbreak hoặc cài lại gói CatVPN trong Sileo.", details: nil))
           return
         }
-
-        manager.loadFromPreferences { reloadErr in
-          if reloadErr != nil {
-            result("NEED_WG_EXPORT")
-            return
-          }
-          do {
-            try manager.connection.startVPNTunnel()
-            DispatchQueue.main.asyncAfter(deadline: .now() + 1.4) {
-              let st = manager.connection.status
-              if st == .connected || st == .connecting {
-                result("UP")
-              } else {
-                result("NEED_WG_EXPORT")
-              }
-            }
-          } catch {
-            result("NEED_WG_EXPORT")
-          }
+        guard response.statusCode == 200 else {
+          result(FlutterError(code: json["error"] as? String ?? "VPN_API_ERROR",
+            message: json["message"] as? String ?? "Không thực hiện được thao tác VPN.", details: nil))
+          return
         }
+        result(json)
       }
-    }
-  }
-
-  private func savePasswordToKeychain(account: String, password: String) -> Data? {
-    guard let passwordData = password.data(using: .utf8) else { return nil }
-
-    let deleteQuery: [String: Any] = [
-      kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: keychainService,
-      kSecAttrAccount as String: account
-    ]
-    SecItemDelete(deleteQuery as CFDictionary)
-
-    let addQuery: [String: Any] = [
-      kSecClass as String: kSecClassGenericPassword,
-      kSecAttrService as String: keychainService,
-      kSecAttrAccount as String: account,
-      kSecValueData as String: passwordData,
-      kSecAttrAccessible as String: kSecAttrAccessibleAfterFirstUnlock,
-      kSecReturnPersistentRef as String: true
-    ]
-
-    var itemRef: CFTypeRef?
-    let status = SecItemAdd(addQuery as CFDictionary, &itemRef)
-    if status == errSecSuccess {
-      return itemRef as? Data
-    }
-    return nil
+    }.resume()
   }
 
   private func presentWireGuardShareSheet(
@@ -207,17 +133,22 @@ import UIKit
     result: @escaping FlutterResult
   ) {
     DispatchQueue.main.async {
-      let fileUrl = FileManager.default.temporaryDirectory.appendingPathComponent(fileName)
+      let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+      let fileUrl = directory.appendingPathComponent(fileName)
       do {
-        try content.write(to: fileUrl, atomically: true, encoding: .utf8)
         guard let presenter = self.topViewController() else {
           result(false)
           return
         }
+        try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+        try Data(content.utf8).write(to: fileUrl, options: [.atomic, .completeFileProtection])
         let activityVc = UIActivityViewController(
           activityItems: [fileUrl],
           applicationActivities: nil
         )
+        activityVc.completionWithItemsHandler = { _, _, _, _ in
+          try? FileManager.default.removeItem(at: directory)
+        }
         if let popover = activityVc.popoverPresentationController {
           popover.sourceView = presenter.view
           popover.sourceRect = CGRect(
@@ -232,6 +163,7 @@ import UIKit
           result(true)
         }
       } catch {
+        try? FileManager.default.removeItem(at: directory)
         result(false)
       }
     }
@@ -239,6 +171,7 @@ import UIKit
 
   private func topViewController() -> UIViewController? {
     let scenes = UIApplication.shared.connectedScenes.compactMap { $0 as? UIWindowScene }
+      .filter { $0.activationState == .foregroundActive }
     for scene in scenes {
       let win = scene.windows.first(where: { $0.isKeyWindow }) ?? scene.windows.first
       if let root = win?.rootViewController {

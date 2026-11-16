@@ -1,9 +1,12 @@
-name: Build CatVPN Nord (Android APK & iOS IPA)
+name: Build CatVPN Nord (APK & Jailbreak DEBs)
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ main, master, 'codex/**' ]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build-android:
@@ -45,18 +48,29 @@ jobs:
           path: build/app/outputs/flutter-apk/app-release.apk
 
   build-ios:
-    name: iOS Release IPA (Sideload & TrollStore)
-    runs-on: macos-latest
+    name: iOS Rootful / Rootless / RootHide DEBs
+    # Pin the Intel host to avoid the constrained macOS arm64 runner queue.
+    # Xcode still cross-compiles the iPhone app for arm64.
+    runs-on: macos-26-intel
+    timeout-minutes: 30
     steps:
       - uses: actions/checkout@v4
 
       - uses: subosito/flutter-action@v2
         with:
+          flutter-version: '3.50.0'
           channel: 'stable'
           cache: true
 
       - name: Install dependencies
         run: flutter pub get
+
+      - name: Validate Flutter and packaging
+        run: |
+          flutter analyze --no-fatal-infos
+          flutter test
+          python3 -m unittest discover -s scripts/tests -v
+          python3 scripts/test_local_api.py
 
       - name: Build iOS Release (No Codesign)
         env:
@@ -71,23 +85,14 @@ jobs:
             --dart-define=NORD_USER="$NORD_USER" \
             --dart-define=NORD_PASS="$NORD_PASS"
 
-      - name: Package Sideload IPA & TrollStore IPA
+      - name: Package three jailbreak variants
         run: |
-          mkdir -p Payload
-          cp -R build/ios/iphoneos/Runner.app Payload/Runner.app
-          zip -r9 CatVPN-Nord-iOS-Sideload.ipa Payload
+          python3 scripts/build_ios_daemon.py
+          python3 scripts/package_jailbreak.py
 
-          if HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1 brew install ldid >/dev/null 2>&1; then
-            ldid -Sios/Runner/TrollStore.entitlements Payload/Runner.app/Runner
-          else
-            codesign --force --sign - --entitlements ios/Runner/TrollStore.entitlements --timestamp=none Payload/Runner.app
-          fi
-          zip -r9 CatVPN-Nord-iOS-TrollStore.ipa Payload
-
-      - name: Upload iOS IPAs
+      - name: Upload jailbreak DEBs and APT index
         uses: actions/upload-artifact@v4
         with:
-          name: CatVPN-Nord-iOS-IPAs
-          path: |
-            CatVPN-Nord-iOS-Sideload.ipa
-            CatVPN-Nord-iOS-TrollStore.ipa
+          name: CatVPN-Nord-Jailbreak-DEBs
+          path: dist/jailbreak/
+          if-no-files-found: error

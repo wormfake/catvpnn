@@ -206,11 +206,36 @@ class _SettingsToolsSheetState extends State<SettingsToolsSheet> {
                         )
                       : const Icon(Icons.sync, size: 18),
                   label: Text(
-                    _saving ? 'Đang đồng bộ Token...' : 'Lưu & Đồng Bộ Khóa NordLynx',
+                    _saving
+                        ? 'Đang đồng bộ Token...'
+                        : 'Lưu & Đồng Bộ Khóa NordLynx',
                     style: const TextStyle(fontWeight: FontWeight.w700),
                   ),
                 ),
               ),
+              if (VpnChannel.isIOS) ...[
+                const SizedBox(height: 18),
+                const Divider(color: Colors.white12),
+                const Text('API đổi IP trên iPhone',
+                    style: TextStyle(
+                        color: Colors.white, fontWeight: FontWeight.w700)),
+                const SizedBox(height: 8),
+                const SelectableText('http://127.0.0.1:8787/changeip',
+                    style: TextStyle(color: Color(0xFF00F5A0), fontSize: 13)),
+                const SizedBox(height: 6),
+                const Text(
+                  'Kết nối VPN một lần, sau đó gọi URL này từ script hoặc Phím tắt. '
+                  'Không cần khóa; chỉ gọi được ngay trên iPhone. Dịch vụ tiếp tục chạy '
+                  'khi đóng giao diện, trong lúc jailbreak đang hoạt động.',
+                  style: TextStyle(color: Colors.white60, fontSize: 12),
+                ),
+                TextButton.icon(
+                  onPressed: () =>
+                      _copyText('http://127.0.0.1:8787/changeip', 'URL đổi IP'),
+                  icon: const Icon(Icons.copy, size: 16),
+                  label: const Text('Copy URL đổi IP'),
+                ),
+              ],
               if (creds != null) ...[
                 const SizedBox(height: 20),
                 const Divider(color: Colors.white12),
@@ -260,7 +285,8 @@ class _SettingsToolsSheetState extends State<SettingsToolsSheet> {
                             server: srv,
                             useCloudflareDns: _cfDns,
                           );
-                          _copyText(wg, 'file cấu hình WireGuard (${srv.hostname})');
+                          _copyText(
+                              wg, 'file cấu hình WireGuard (${srv.hostname})');
                         },
                         icon: const Icon(Icons.copy, size: 16),
                         label: const Text('Copy WireGuard .conf'),
@@ -274,7 +300,8 @@ class _SettingsToolsSheetState extends State<SettingsToolsSheet> {
                         onPressed: () {
                           final proxyLine =
                               '${srv.hostname}:89:${creds.serviceUsername}:${creds.servicePassword}';
-                          _copyText(proxyLine, 'HTTPS SSL Proxy (${srv.hostname}:89)');
+                          _copyText(proxyLine,
+                              'HTTPS SSL Proxy (${srv.hostname}:89)');
                         },
                         icon: const Icon(Icons.lan_outlined, size: 16),
                         label: const Text('Copy HTTPS Proxy (:89)'),

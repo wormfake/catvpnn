@@ -1,8 +1,10 @@
 workflows:
   ios-ipa-workflow:
-    name: CatVPN Nord iOS IPA (Sideload & TrollStore)
+    name: CatVPN Nord iOS Rootful / Rootless / RootHide DEBs
     instance_type: mac_mini_m2
     max_build_duration: 30
+    environment:
+      flutter: 3.50.0
     triggering:
       events:
         - push
@@ -14,6 +16,13 @@ workflows:
       - name: Get Flutter packages
         script: flutter pub get
 
+      - name: Validate Flutter and packaging
+        script: |
+          flutter analyze --no-fatal-infos
+          flutter test
+          python3 -m unittest discover -s scripts/tests -v
+          python3 scripts/test_local_api.py
+
       - name: Build iOS Release (No Codesign)
         script: |
           flutter build ios --release --no-codesign \
@@ -22,21 +31,9 @@ workflows:
             --dart-define=NORD_USER="${NORD_USER:-}" \
             --dart-define=NORD_PASS="${NORD_PASS:-}"
 
-      - name: Package Sideload & TrollStore IPAs
+      - name: Package three jailbreak variants
         script: |
-          rm -rf Payload
-          mkdir -p Payload
-          cp -R build/ios/iphoneos/Runner.app Payload/Runner.app
-          zip -r9 CatVPN-Nord-iOS-Sideload.ipa Payload
-
-          rm -rf Payload
-          mkdir -p Payload
-          cp -R build/ios/iphoneos/Runner.app Payload/Runner.app
-          if HOMEBREW_NO_AUTO_UPDATE=1 HOMEBREW_NO_INSTALL_CLEANUP=1 brew install ldid >/dev/null 2>&1; then
-            ldid -Sios/Runner/TrollStore.entitlements Payload/Runner.app/Runner
-          else
-            codesign --force --sign - --entitlements ios/Runner/TrollStore.entitlements --timestamp=none Payload/Runner.app
-          fi
-          zip -r9 CatVPN-Nord-iOS-TrollStore.ipa Payload
+          python3 scripts/build_ios_daemon.py
+          python3 scripts/package_jailbreak.py
     artifacts:
-      - "*.ipa"
+      - "dist/jailbreak/**"
