@@ -1,23 +1,16 @@
-Origin: CatVPN Nord Repo
+Origin: CatVPN Nord
 Label: CatVPN Nord
 Suite: stable
-Version: 1.0
 Codename: ios
 Architectures: iphoneos-arm iphoneos-arm64 iphoneos-arm64e
-Components: main
-Description: Kho CatVPN Nord (3 goi rieng biet: RootHide, Rootless, Rootful)
+Description: CatVPN Nord jailbreak packages
 MD5Sum:
- 5feedd4d9637429c1d2ec17963c6a5a6 2288 Packages
- b4eb13b99abb1cdaa9ff8938d56098c2 854 Packages.gz
- de439d2b41c728ebc4dcd943a132238f 997 Packages.bz2
- f147ffc20c7d2b09fef93273599e4b72 900 Packages.xz
-SHA1:
- 0b52d3e57ff46be1be9b469d7db0e44c090e8721 2288 Packages
- e7eb72e6493c14bcaf06b869cc32d1494eaeacbf 854 Packages.gz
- ad366d9edc7577f4c0fbe5ed02933a0ca9b37a5e 997 Packages.bz2
- 57f441608dd9df309046cae86302df9bb7a9c634 900 Packages.xz
+ aa2f03b58a1ee4f15bb60c80d46138e1 1822 Packages
+ b90f9646a5b7ca37a9611ae884357101 607 Packages.gz
+ 1b5d8b7f72a6b82fde65d7cdf2c0bcce 729 Packages.bz2
+ 41bad8f8c985a15f0b4112c5dfcdfd6e 660 Packages.xz
 SHA256:
- 094fee186a1a7ab910b44a59c169997e22640e8117b95cc32c213e139aafea46 2288 Packages
- 363448b56981c6e5dc8854a0c563f2c4e8963233b025cf582642c688638f95b3 854 Packages.gz
- 23a1dc4a914eb981d1e6bfe93b36a54ddee9cf74fc6a479aa33e708093a812e5 997 Packages.bz2
- a2a81933162aad90a194d0d46b851df1142a728e4393436df525d4ad13c20adf 900 Packages.xz
+ e3e0e8a9c0cc55b26105a6441a242241cf9ccb2c0a8c01e35c54a9bacd09f307 1822 Packages
+ dd7a08b254cf4712b64e012f23c4a3ad5153c45bcb2eb6250969714189190c9e 607 Packages.gz
+ c28a5af395f4c9baa74ec0ae6b158a29783fb6dca072ef5e2f46d1264d2198fb 729 Packages.bz2
+ 9f93a7d6308ab48023f9fd2f14af3c42dd00a2fb46e424d18df2da23dbbcb748 660 Packages.xz

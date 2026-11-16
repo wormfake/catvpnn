@@ -91,6 +91,7 @@
       <div>
         <h1>CatVPN Nord Repo</h1>
         <div class="sub">3 Gói Độc Lập: RootHide • Rootless • Rootful</div>
+        <div class="sub">DEB v1.0.5+2 · iOS 15.0 trở lên</div>
       </div>
     </div>
 
@@ -110,25 +111,35 @@
     <div class="grid">
       <div class="pkg">
         <b>1. CatVPN Nord (RootHide)</b> — <code>com.catvpn.nord.roothide</code><br/>
-        Dành cho máy Dopamine-roothide / Bootstrap (iphoneos-arm64e).
+        Dành riêng cho RootHide / RootHide Bootstrap.<br/>Kiến trúc gói: <code>iphoneos-arm64e</code>.
       </div>
       <div class="pkg">
         <b>2. CatVPN Nord (Rootless)</b> — <code>com.catvpn.nord.rootless</code><br/>
-        Dành cho máy palera1n rootless (iOS 15–16.7.x) &amp; Dopamine thường.
+        Dành cho Dopamine thường / palera1n rootless.<br/>Kiến trúc gói: <code>iphoneos-arm64</code>.
       </div>
       <div class="pkg">
         <b>3. CatVPN Nord (Rootful / Cydia)</b> — <code>com.catvpn.nord.rootful</code><br/>
-        Dành cho máy Cydia / checkra1n / palera1n rootful.
+        Dành cho jailbreak rootful trên iOS 15.0 trở lên.<br/>Kiến trúc gói: <code>iphoneos-arm</code>. Không hỗ trợ iOS 13/14.
       </div>
     </div>
 
     <div class="sep"></div>
 
+    <div class="pkg" style="margin-bottom: 14px;">
+      <b>Chọn theo loại jailbreak</b><br/>
+      Cydia/Sileo là trình quản lý gói; tên trình quản lý không quyết định bản cần cài.
+      Chỉ cài một trong ba gói. Có thể kiểm tra kiến trúc bằng <code>dpkg --print-architecture</code>.
+    </div>
+    <div class="pkg" style="margin-bottom: 14px;">
+      <b>Nâng cấp từ Rootless/RootHide 1.0.4</b><br/>
+      Gỡ gói CatVPN cũ bằng trình quản lý gói trước khi cài bản mới.
+      Nếu còn bản CatVPN cài riêng qua TrollStore, hãy gỡ bản đó trong TrollStore.
+      Lưu lại cài đặt cần dùng trước khi gỡ.
+    </div>
     <div class="grid">
-      <a class="btn troll" href="apple-magnifier://install?url=https://wormfake.github.io/catvpnn/ipa/CatVPN-Nord-TrollStore.ipa">🧌 Cài 1-Chạm qua TrollStore</a>
-      <a class="btn dl" href="debs/com.catvpn.nord.roothide_1.0.4_iphoneos-arm64e.deb">⬇ Tải lẻ DEB RootHide</a>
-      <a class="btn dl" href="debs/com.catvpn.nord.rootless_1.0.4_iphoneos-arm64.deb">⬇ Tải lẻ DEB Rootless</a>
-      <a class="btn dl" href="debs/com.catvpn.nord.rootful_1.0.4_iphoneos-arm.deb">⬇ Tải lẻ DEB Rootful (Cydia)</a>
+      <a class="btn dl" href="debs/com.catvpn.nord.roothide_1.0.5%2B2_iphoneos-arm64e.deb">⬇ Tải lẻ DEB RootHide</a>
+      <a class="btn dl" href="debs/com.catvpn.nord.rootless_1.0.5%2B2_iphoneos-arm64.deb">⬇ Tải lẻ DEB Rootless</a>
+      <a class="btn dl" href="debs/com.catvpn.nord.rootful_1.0.5%2B2_iphoneos-arm.deb">⬇ Tải lẻ DEB Rootful (Cydia)</a>
     </div>
   </div>
 </body>

@@ -1,57 +1,48 @@
-Package: com.catvpn.nord.roothide
-Name: CatVPN Nord (RootHide)
-Version: 1.0.4
-Architecture: iphoneos-arm64e
-Maintainer: CatVPN Nord <support@catvpn.local>
-Author: CatVPN Nord
-Section: Networking
-Depends: firmware (>= 15.0)
-Conflicts: com.catvpn.nord, com.catvpn.nord.rootless, com.catvpn.nord.rootful
-Replaces: com.catvpn.nord
-Installed-Size: 6846
-Icon: https://wormfake.github.io/catvpnn/CydiaIcon.png
-Description: Ban rieng cho Jailbreak RootHide (Dopamine-roothide / Bootstrap arm64e).
-Filename: ./debs/com.catvpn.nord.roothide_1.0.4_iphoneos-arm64e.deb
-Size: 6993002
-MD5sum: 1e9647104d499c9b8d7c55d299f2d394
-SHA1: 62c353f3f5565483a04a97881595275ebc2efdca
-SHA256: 39f1e22d8e3326cb47e18055d62d323fa187efb3e062569ce4958f3c3035cb97
-
-Package: com.catvpn.nord.rootless
-Name: CatVPN Nord (Rootless)
-Version: 1.0.4
-Architecture: iphoneos-arm64
-Maintainer: CatVPN Nord <support@catvpn.local>
-Author: CatVPN Nord
-Section: Networking
-Depends: firmware (>= 15.0)
-Conflicts: com.catvpn.nord, com.catvpn.nord.roothide, com.catvpn.nord.rootful
-Replaces: com.catvpn.nord
-Installed-Size: 16142
-Icon: https://wormfake.github.io/catvpnn/CydiaIcon.png
-Description: Ban rieng cho Jailbreak Rootless (palera1n rootless iOS 15-16.7.x & Dopamine). Da ky ldid + Bundle Container chuan khong can TrollStore.
-Filename: ./debs/com.catvpn.nord.rootless_1.0.4_iphoneos-arm64.deb
-Size: 6976234
-MD5sum: 3c3a19b5332c3eb45c30c331bd5dc369
-SHA1: 245313f7cf6917a3e76dfde4c41396f80007e6e6
-SHA256: 115b95d19e34e695d712c8172b655626f7a9f5f1ad59d2a7e7fb8fa0e5b7448f
-
 Package: com.catvpn.nord.rootful
 Name: CatVPN Nord (Rootful / Cydia)
-Version: 1.0.4
+Version: 1.0.5+2
 Architecture: iphoneos-arm
-Maintainer: CatVPN Nord <support@catvpn.local>
-Author: CatVPN Nord
+Maintainer: CatVPN Nord
 Section: Networking
-Depends: firmware (>= 13.0)
-Conflicts: com.catvpn.nord, com.catvpn.nord.roothide, com.catvpn.nord.rootless
+Depends: firmware (>= 15.0), uikittools
+Conflicts: com.catvpn.nord, com.catvpn.nord.rootless, com.catvpn.nord.roothide
 Replaces: com.catvpn.nord
-Installed-Size: 16142
-Icon: https://wormfake.github.io/catvpnn/CydiaIcon.png
-Description: Ban rieng cho Jailbreak Rootful (Cydia / checkra1n / palera1n rootful / Unc0ver - /Applications).
-Filename: ./debs/com.catvpn.nord.rootful_1.0.4_iphoneos-arm.deb
-Size: 6975262
-MD5sum: bd4c9c7de5bfef95ae9de3df6821b22f
-SHA1: 907d1d01550833e2cedc3bb8d9785fbac03944b3
-SHA256: 744d802f0fbcb0c66b98ca650ac60539137eddd56d2164481d8e7ffa6593390d
+Installed-Size: 16188
+Description: CatVPN Nord for rootful; iOS 15.0+; install only on matching jailbreak.
+Filename: debs/com.catvpn.nord.rootful_1.0.5+2_iphoneos-arm.deb
+Size: 7000254
+MD5sum: 8b9aaeb773550e0e24bfee1d4272cfdf
+SHA256: 14bcab778da6b429e37f66f155eb92a55359623d8859ea5f335c7c7316c6bcf5
+
+Package: com.catvpn.nord.rootless
+Name: CatVPN Nord (Rootless / Sileo)
+Version: 1.0.5+2
+Architecture: iphoneos-arm64
+Maintainer: CatVPN Nord
+Section: Networking
+Depends: firmware (>= 15.0), uikittools
+Conflicts: com.catvpn.nord, com.catvpn.nord.rootful, com.catvpn.nord.roothide
+Replaces: com.catvpn.nord
+Installed-Size: 16188
+Description: CatVPN Nord for rootless; iOS 15.0+; install only on matching jailbreak.
+Filename: debs/com.catvpn.nord.rootless_1.0.5+2_iphoneos-arm64.deb
+Size: 7000474
+MD5sum: bbd958d7cd64395976064a74fe21bedb
+SHA256: 3f4da8bbd2c67ad1efd3462d203d661e8744afc40676ec7d038622838d240bc3
+
+Package: com.catvpn.nord.roothide
+Name: CatVPN Nord (RootHide / Sileo)
+Version: 1.0.5+2
+Architecture: iphoneos-arm64e
+Maintainer: CatVPN Nord
+Section: Networking
+Depends: firmware (>= 15.0), uikittools
+Conflicts: com.catvpn.nord, com.catvpn.nord.rootful, com.catvpn.nord.rootless
+Replaces: com.catvpn.nord
+Installed-Size: 16188
+Description: CatVPN Nord for roothide; iOS 15.0+; install only on matching jailbreak.
+Filename: debs/com.catvpn.nord.roothide_1.0.5+2_iphoneos-arm64e.deb
+Size: 7000418
+MD5sum: f806e3a8ac2a4e1f4ffb905fbf5f7e61
+SHA256: dcd1a2c53c91d02fa0a68fd8e7d3d192de7b02568d5f8aef56e4573d812e89d6
 
