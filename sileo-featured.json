@@ -1,0 +1,19 @@
+{
+  "class": "FeaturedBannersView",
+  "itemSize": "{263, 148}",
+  "itemCornerRadius": 12,
+  "banners": [
+    {
+      "url": "https://wormfake.github.io/catvpnn/CydiaIcon.png",
+      "title": "CatVPN Nord (RootHide)",
+      "package": "com.catvpn.nord.roothide",
+      "hideShadow": false
+    },
+    {
+      "url": "https://wormfake.github.io/catvpnn/CydiaIcon.png",
+      "title": "CatVPN Nord (Rootless)",
+      "package": "com.catvpn.nord.rootless",
+      "hideShadow": false
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>CatVPN Nord • 3 Bản Riêng Biệt (RootHide / Rootless / Rootful)</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: radial-gradient(circle at top, #171f3f 0%, #090c18 65%);
+      color: #f8fafc;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+    .card {
+      max-width: 480px;
+      width: 100%;
+      background: rgba(19, 24, 46, 0.92);
+      border: 1px solid rgba(124, 92, 255, 0.35);
+      border-radius: 24px;
+      padding: 26px 22px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+    }
+    .hdr { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .hdr img { width: 58px; height: 58px; border-radius: 14px; border: 1px solid rgba(0,245,160,0.4); }
+    h1 { margin: 0; font-size: 20px; }
+    .sub { color: #00f5a0; font-size: 12.5px; margin-top: 3px; font-weight: 600; }
+    .url-box {
+      background: #0d1122;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 11px 13px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      margin: 12px 0 16px;
+      font-family: monospace;
+      font-size: 13px;
+      color: #00f5a0;
+      word-break: break-all;
+    }
+    .copy-btn {
+      background: #7c5cff;
+      color: #fff;
+      border: none;
+      border-radius: 8px;
+      padding: 7px 11px;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .grid { display: grid; gap: 9px; }
+    a.btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      text-decoration: none;
+      padding: 12px 15px;
+      border-radius: 13px;
+      font-weight: 700;
+      font-size: 14px;
+    }
+    .sileo { background: #0f766e; color: #fff; border: 1px solid #2dd4bf; }
+    .zebra { background: #1e293b; color: #fff; border: 1px solid #94a3b8; }
+    .cydia { background: #92400e; color: #fff; border: 1px solid #f59e0b; }
+    .troll { background: linear-gradient(90deg, #059669, #0284c7); color: #fff; }
+    .pkg {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 12px;
+      padding: 10px 12px;
+      font-size: 12.5px;
+      line-height: 1.45;
+    }
+    .pkg b { color: #00f5a0; }
+    .dl { background: rgba(255,255,255,0.06); color: #e2e8f0; font-size: 12.5px; padding: 10px; }
+    .sep { height: 1px; background: rgba(255,255,255,0.08); margin: 15px 0; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="hdr">
+      <img src="CydiaIcon.png" alt="CatVPN Nord" />
+      <div>
+        <h1>CatVPN Nord Repo</h1>
+        <div class="sub">3 Gói Độc Lập: RootHide • Rootless • Rootful</div>
+      </div>
+    </div>
+
+    <div class="url-box">
+      <span id="repoUrl">https://wormfake.github.io/catvpnn/</span>
+      <button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('repoUrl').innerText);this.innerText='Đã chép!';">Copy</button>
+    </div>
+
+    <div class="grid">
+      <a class="btn sileo" href="sileo://source/https://wormfake.github.io/catvpnn/">⚡ Thêm nguồn vào Sileo</a>
+      <a class="btn zebra" href="zbra://sources/add/https://wormfake.github.io/catvpnn/">🦓 Thêm nguồn vào Zebra</a>
+      <a class="btn cydia" href="cydia://url/https://cydia.saurik.com/api/share#?source=https://wormfake.github.io/catvpnn/">📦 Thêm nguồn vào Cydia</a>
+    </div>
+
+    <div class="sep"></div>
+
+    <div class="grid">
+      <div class="pkg">
+        <b>1. CatVPN Nord (RootHide)</b> — <code>com.catvpn.nord.roothide</code><br/>
+        Dành cho máy Dopamine-roothide / Bootstrap (iphoneos-arm64e).
+      </div>
+      <div class="pkg">
+        <b>2. CatVPN Nord (Rootless)</b> — <code>com.catvpn.nord.rootless</code><br/>
+        Dành cho máy palera1n rootless (iOS 15–16.7.x) &amp; Dopamine thường.
+      </div>
+      <div class="pkg">
+        <b>3. CatVPN Nord (Rootful / Cydia)</b> — <code>com.catvpn.nord.rootful</code><br/>
+        Dành cho máy Cydia / checkra1n / palera1n rootful.
+      </div>
+    </div>
+
+    <div class="sep"></div>
+
+    <div class="grid">
+      <a class="btn troll" href="apple-magnifier://install?url=https://wormfake.github.io/catvpnn/ipa/CatVPN-Nord-TrollStore.ipa">🧌 Cài 1-Chạm qua TrollStore</a>
+      <a class="btn dl" href="debs/com.catvpn.nord.roothide_1.0.4_iphoneos-arm64e.deb">⬇ Tải lẻ DEB RootHide</a>
+      <a class="btn dl" href="debs/com.catvpn.nord.rootless_1.0.4_iphoneos-arm64.deb">⬇ Tải lẻ DEB Rootless</a>
+      <a class="btn dl" href="debs/com.catvpn.nord.rootful_1.0.4_iphoneos-arm.deb">⬇ Tải lẻ DEB Rootful (Cydia)</a>
+    </div>
+  </div>
+</body>
+</html>
